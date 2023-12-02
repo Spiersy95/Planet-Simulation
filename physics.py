@@ -39,7 +39,7 @@ def update_positions():
         body.x = body.new_x
         body.y = body.new_y
 
-        if len(body.arc) > 200:
+        if len(body.arc) > 10000:
             body.arc.pop(0)
             body.arc.append([body.x, body.y])
         else:

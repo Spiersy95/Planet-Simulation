@@ -13,10 +13,10 @@ class CelestialBody:
         self.vel_x = 0
         self.vel_y = 0
 
-        self.new_x = 0
-        self.new_y = 0
+        self.new_x = x
+        self.new_y = y
 
-        self.arc =[]
+        self.arc = []
 
 
 class Planet(CelestialBody):

@@ -1,16 +1,15 @@
 import pygame
-from pygame_widgets.slider import Slider
-from bodies import *
+from bodies import sun
+from bodies import bodies
 
 
 WIDTH, HEIGHT = 900, 900
 
 screen = pygame.display.set_mode((HEIGHT, WIDTH))
 
-slider = Slider(screen, 100, 100, 200, 20, min=1, max=300, step=5)
-
 pygame.display.set_caption('Planets in Motion')
 
+scale = 200
 
 def draw_bodies(scale):
     for body in bodies:
