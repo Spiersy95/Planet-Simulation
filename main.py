@@ -17,11 +17,13 @@ pause = False
 
 origin = camera.get_target()
 
-speed = 5
+speed = 12
+hours = 0
 
 clock = pygame.time.Clock()
 
 while running:
+    camera.set_target(origin)
     clock.tick(60)
     screen.fill((0, 0, 0))
 
@@ -30,15 +32,18 @@ while running:
             new_positions()
             update_positions()
 
+        hours += int(speed)
+        print(hours)
+
+
     if camera.get_time() != 0:
         camera.smoother(origin)
         draw_arcs(camera, scale / AU)
         draw_bodies(camera, scale / AU)
     else:
-        camera.set_target(origin)
+        print("done smoothing")
         draw_arcs(camera, scale / AU)
         draw_bodies(camera, scale / AU)
-
 
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
@@ -46,7 +51,7 @@ while running:
                 pause = True
             elif event.key == pygame.K_SPACE:
                 pause = False
-            if event.key == pygame.K_UP and scale + 20 <= 500:
+            if event.key == pygame.K_UP and scale + 20 <= 400:
                 scale += 20
             if event.key == pygame.K_DOWN and scale - 20 >= 20:
                 scale -= 20
@@ -75,5 +80,6 @@ while running:
 
         if event.type == pygame.QUIT:
             running = False
+
 
     pygame.display.update()
