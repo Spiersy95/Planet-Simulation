@@ -7,21 +7,20 @@ class Camera:
         self.y = y
         self.time = 0
         self.target = target
-        self._pan_speed = 500
+        self.pan_speed = 500
 
-    @property
-    def pan_speed(self):
-        return self._pan_speed
+    def get_pan_speed(self):
+        return self.pan_speed
 
-    @pan_speed.setter
-    def pan_speed(self, value):
-        self._pan_speed = value
+    def set_pan_speed(self, value):
+        self.pan_speed = value
 
-    @property
     def get_time(self):
         return self.time
 
-    @property
+    def set_time(self, time):
+        self.time = time
+
     def get_target(self):
         return self.target
 
