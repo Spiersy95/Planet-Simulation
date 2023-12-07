@@ -1,23 +1,16 @@
 from camera import camera
 from bodies import sun, earth, mars, mercury, venus, jupiter, bodies
 from physics import new_positions, update_positions
-from display import screen, pygame, draw, WIDTH, HEIGHT
+from display import screen, pygame, draw, scale
 from constants import AU
+from interactions import is_hitbox
 
 running: bool = True
 pause = False
 
 speed = 12
-scale = 200
+
 hours = 0
-
-
-def is_hitbox(body, x, y):
-    if - body.hitbox[2] < x - body.x * scale / AU - WIDTH // 2 + camera.x * scale / AU < body.hitbox[2] \
-            and - body.hitbox[2] < y - body.y * scale / AU - HEIGHT // 2 + camera.y * scale / AU < body.hitbox[2]:
-        return True
-    return False
-
 
 origin = sun
 

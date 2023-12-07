@@ -9,7 +9,7 @@ class CelestialBody:
         self.radius = radius
         self.mass = mass
         self.colour = colour
-        self.hitbox = (self.x, self.y, self.radius)
+        self.hitbox = [self.x, self.y, self.radius]
 
         self.vel_x = 0
         self.vel_y = 0
@@ -34,6 +34,11 @@ class CelestialBody:
     def get_colour(self):
         return self.colour
 
+    def set_hitbox(self, x, y, radius):
+        self.hitbox[0] = x
+        self.hitbox[1] = y
+        self.hitbox[2] = radius
+
     def get_vel_x(self):
         return self.vel_x
 
@@ -57,6 +62,7 @@ class CelestialBody:
 
     def set_new_y(self, new_y):
         self.new_y = new_y
+
 
 class Planet(CelestialBody):
     def __init__(self, x, y, colour, radius, mass):

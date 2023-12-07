@@ -3,6 +3,7 @@ from bodies import bodies
 from camera import camera
 
 WIDTH, HEIGHT = 900, 900
+scale = 200
 
 screen = pygame.display.set_mode((HEIGHT, WIDTH))
 

@@ -38,6 +38,7 @@ def update_positions():
     for body in bodies:
         body.x = body.get_new_x()
         body.y = body.get_new_y()
+        body.set_hitbox(body.x, body.y, body.get_radius())
 
         if len(body.arc) > 400:
             body.arc.pop(0)
