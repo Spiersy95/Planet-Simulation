@@ -2,51 +2,42 @@ from bodies import sun
 
 
 class Camera:
-
     def __init__(self, x, y, target):
         self.x = x
         self.y = y
         self.time = 0
         self.target = target
-        self.pan_speed = 500
+        self._pan_speed = 500
 
-    def get_x(self):
-        return self.x
+    @property
+    def pan_speed(self):
+        return self._pan_speed
 
-    def set_x(self, x):
-        self.x = x
+    @pan_speed.setter
+    def pan_speed(self, value):
+        self._pan_speed = value
 
-    def set_y(self, y):
-        self.y = y
-
-    def get_y(self):
-        return self.y
-
+    @property
     def get_time(self):
         return self.time
 
-    def set_time(self, time):
-        self.time = time
-
-    def set_target(self, target):
-        self.set_x(target.get_x())
-        self.set_y(target.get_y())
-        self.target = target
-
+    @property
     def get_target(self):
         return self.target
 
-    def get_pan_speed(self):
-            return self.pan_speed
+    def set_target(self, target):
+        self.x = target.x
+        self.y = target.y
+        self.target = target
 
     def smoother(self, target):
         self.time += 1
-        if 0 < self.get_time() < self.get_pan_speed():
-            self.set_x((((self.get_pan_speed() - self.get_time()) * self.get_x() + self.get_time() * target.get_x()) / self.get_pan_speed()))
-            self.set_y((((self.get_pan_speed() - self.get_time()) * self.get_y() + self.get_time() * target.get_y()) / self.get_pan_speed()))
+        if 0 < self.time < self.pan_speed:
+            self.x = (((self.pan_speed - self.time) * self.x + self.time * target.x) / self.pan_speed)
+            self.y = (((self.pan_speed - self.time) * self.y + self.time * target.y) / self.pan_speed)
         else:
-            self.set_time(0)
+            self.time = 0
             self.set_target(target)
 
 
-camera = Camera(sun.get_x(), sun.get_y(), sun)
+camera = Camera(sun.x, sun.y, sun)

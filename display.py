@@ -1,5 +1,6 @@
 import pygame
 from bodies import bodies
+from camera import camera
 
 WIDTH, HEIGHT = 900, 900
 
@@ -7,20 +8,24 @@ screen = pygame.display.set_mode((HEIGHT, WIDTH))
 
 pygame.display.set_caption('Planets in Motion')
 
-scale = 200
 
-
-def draw_bodies(camera, scale):
+def draw_bodies(scale):
     for body in bodies:
-        x = body.get_x() * scale + WIDTH // 2 - camera.get_x() * scale
-        y = body.get_y() * scale + HEIGHT // 2 - camera.get_y() * scale
+        x = body.x * scale + WIDTH // 2 - camera.x * scale
+        y = body.y * scale + HEIGHT // 2 - camera.y * scale
         pygame.draw.circle(screen, body.get_colour(), (x, y), body.get_radius())
 
 
-def draw_arcs(camera, scale):
+def draw_arcs(scale):
     for body in bodies:
-        for i in range(len(body.arc) - 1):
-            pygame.draw.line(screen, (100, 100, 0), (body.arc[i][0] * scale + WIDTH // 2 - scale * camera.get_x(),
-                                                     body.arc[i][1] * scale + HEIGHT // 2 - camera.get_y() * scale),
-                             (body.arc[i + 1][0] * scale + WIDTH // 2 - scale * camera.get_x(),
-                              body.arc[i + 1][1] * scale + HEIGHT // 2 - camera.get_y() * scale))
+        for (x1, y1), (x2, y2) in zip(body.arc, body.arc[1:]):
+            x1 = int(x1 * scale + WIDTH // 2 - scale * camera.x)
+            y1 = int(y1 * scale + HEIGHT // 2 - camera.y * scale)
+            x2 = int(x2 * scale + WIDTH // 2 - scale * camera.x)
+            y2 = int(y2 * scale + HEIGHT // 2 - camera.y * scale)
+            pygame.draw.line(screen, (100, 100, 0), (x1, y1), (x2, y2))
+
+
+def draw(scale):
+    draw_arcs(scale)
+    draw_bodies(scale)

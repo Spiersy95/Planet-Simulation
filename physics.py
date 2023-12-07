@@ -7,8 +7,8 @@ from constants import TIMESTEP
 def acceleration(body, other):
     if body == other:
         return 0, 0
-    distance_x = body.get_x() - other.get_x()
-    distance_y = body.get_y() - other.get_y()
+    distance_x = body.x - other.x
+    distance_y = body.y - other.y
     distance = math.sqrt(distance_x ** 2 + distance_y ** 2)
     theta = math.atan2(distance_y, distance_x)
 
@@ -30,17 +30,17 @@ def new_positions():
         body.set_vel_x(body.get_vel_x() + total_ax * TIMESTEP)
         body.set_vel_y(body.get_vel_y() + total_ay * TIMESTEP)
 
-        body.set_new_x(body.get_x() + body.get_vel_x() * TIMESTEP)
-        body.set_new_y(body.get_y() + body.get_vel_y() * TIMESTEP)
+        body.set_new_x(body.x + body.get_vel_x() * TIMESTEP)
+        body.set_new_y(body.y + body.get_vel_y() * TIMESTEP)
 
 
 def update_positions():
     for body in bodies:
-        body.set_x(body.get_new_x())
-        body.set_y(body.get_new_y())
+        body.x = body.get_new_x()
+        body.y = body.get_new_y()
 
         if len(body.arc) > 400:
             body.arc.pop(0)
-            body.arc.append([body.get_x(), body.get_y()])
+            body.arc.append([body.x, body.y])
         else:
-            body.arc.append([body.get_x(), body.get_y()])
+            body.arc.append([body.x, body.y])
