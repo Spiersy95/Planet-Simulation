@@ -69,11 +69,9 @@ class Planet(CelestialBody):
         super().__init__(x, y, colour, radius, mass)
 
 
-
 class Sun(CelestialBody):
     def __init__(self, x, y, colour, radius, mass):
         super().__init__(x, y, colour, radius, mass)
-
 
 
 sun = Sun(0, 0, (255, 255, 0), 30, 1.98892e30)

@@ -5,57 +5,16 @@ from display import screen, pygame, draw, scale
 from constants import AU
 from interactions import is_hitbox
 
-running = True
+running: bool = True
 pause = False
+
 speed = 12
+
 hours = 0
+
 origin = sun
+
 clock = pygame.time.Clock()
-
-def handle_input():
-    global scale, speed, origin
-    for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                pause = not pause
-            elif event.key == pygame.K_UP and scale + 20 <= 400:
-                scale += 20
-            elif event.key == pygame.K_DOWN and scale - 20 >= 20:
-                scale -= 20
-            elif event.key == pygame.K_RIGHT and speed < 182:
-                speed += 1
-            elif event.key == pygame.K_LEFT and speed > 1:
-                speed -= 1
-            elif event.key == pygame.K_RETURN:
-                origin = sun
-                camera.set_time(1)
-            elif event.key == pygame.K_j:
-                origin = jupiter
-                camera.set_time(1)
-            elif event.key == pygame.K_e:
-                origin = earth
-                camera.set_time(1)
-            elif event.key == pygame.K_a:
-                origin = mars
-                camera.set_time(1)
-            elif event.key == pygame.K_m:
-                origin = mercury
-                camera.set_time(1)
-            elif event.key == pygame.K_v:
-                origin = venus
-                camera.set_time(1)
-
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            if pygame.mouse.get_pressed()[0]:
-                x, y = pygame.mouse.get_pos()
-                for body in bodies:
-                    if body != origin and is_hitbox(body, x, y):
-                        origin = body
-                        camera.set_time(1)
-
-        elif event.type == pygame.QUIT:
-            global running
-            running = False
 
 while running:
     time_lapse = f"Time since beginning of simulation: {hours // 8760} years {(hours % 8760) // 24} " \
@@ -65,7 +24,7 @@ while running:
     screen.fill((0, 0, 0))
 
     if not pause:
-        for _ in range(speed):
+        for i in range(speed):
             new_positions()
             update_positions()
             print(time_lapse)
@@ -78,5 +37,48 @@ while running:
         camera.set_target(origin)
         draw(scale / AU)
 
-    handle_input()
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE and not pause:
+                pause = True
+            elif event.key == pygame.K_SPACE:
+                pause = False
+            if event.key == pygame.K_UP and scale + 20 <= 400:
+                scale += 20
+            if event.key == pygame.K_DOWN and scale - 20 >= 20:
+                scale -= 20
+            if event.key == pygame.K_RIGHT and speed < 182:
+                speed += 1
+            if event.key == pygame.K_LEFT and speed > 1:
+                speed -= 1
+            if event.key == pygame.K_RETURN:
+                origin = sun
+                camera.time = 1
+            if event.key == pygame.K_j:
+                origin = jupiter
+                camera.time = 1
+            if event.key == pygame.K_e:
+                origin = earth
+                camera.time = 1
+            if event.key == pygame.K_a:
+                origin = mars
+                camera.time = 1
+            if event.key == pygame.K_m:
+                origin = mercury
+                camera.time = 1
+            if event.key == pygame.K_v:
+                origin = venus
+                camera.time = 1
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if pygame.mouse.get_pressed()[0]:
+                x, y = pygame.mouse.get_pos()
+                for body in bodies:
+                    if body != origin:
+                        if is_hitbox(body, x, y, scale):
+                            origin = body
+                            camera.time = 1
+
+        if event.type == pygame.QUIT:
+            running = False
+
     pygame.display.flip()
