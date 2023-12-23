@@ -1,7 +1,7 @@
 from camera import camera
 from constants import AU
 from display import WIDTH, HEIGHT
-from display import scale
+
 
 
 def is_hitbox(body, x, y, scale):

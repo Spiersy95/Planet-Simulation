@@ -27,13 +27,15 @@ while running:
         for i in range(speed):
             new_positions()
             update_positions()
-            print(time_lapse)
+           # print(time_lapse)
         hours += int(speed)
 
-    if camera.get_time != 0:
+    if camera.get_time() != 0:
+        print("smoothing")
         camera.smoother(origin)
         draw(scale / AU)
     else:
+        print("not smoothing")
         camera.set_target(origin)
         draw(scale / AU)
 

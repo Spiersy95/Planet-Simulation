@@ -34,6 +34,7 @@ class Camera:
         if 0 < self.time < self.pan_speed:
             self.x = (((self.pan_speed - self.time) * self.x + self.time * target.x) / self.pan_speed)
             self.y = (((self.pan_speed - self.time) * self.y + self.time * target.y) / self.pan_speed)
+            self.time += 1
         else:
             self.time = 0
             self.set_target(target)
