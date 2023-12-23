@@ -7,7 +7,7 @@ class Camera:
         self.y = y
         self.time = 0
         self.target = target
-        self.pan_speed = 500
+        self.pan_speed = 200
 
     def get_pan_speed(self):
         return self.pan_speed
